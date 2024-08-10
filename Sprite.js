@@ -5,6 +5,17 @@ class Sprite {
     this.image.onload = () => {
       this.isLoaded = true;
     };
+
+    // shadow
+    this.shadow = new Image();
+    this.shadow.onload = () => {
+      this.isShadowLoaded = true;
+    }
+    this.useShadow = true;
+    if (this.useShadow) {
+      this.shadow.src = "/images/characters/shadow.png"
+
+    }
     this.animations = config.animations || {
       idleDown: [[0, 0]],
     };
@@ -12,9 +23,13 @@ class Sprite {
     this.currentAnimationFrame = 0;
     this.gameObject = config.gameObject;
   }
+
+
+
   draw(ctx) {
-    const x = this.gameObject.x * 16 -8;
+    const x = this.gameObject.x * 16 - 8;
     const y = this.gameObject.y * 16 - 18;
-    ctx.drawImage(this.image, 0, 0, 32, 32, x * 16 -8, y * 16 - 18, 32, 32)
+    this.isShadowLoaded && ctx.drawImage(this.shadow, x, y);
+    this.isLoaded && ctx.drawImage(this.image, 0, 0, 32, 32, x, y, 32, 32);
   }
 }
