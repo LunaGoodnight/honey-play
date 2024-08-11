@@ -3,30 +3,29 @@ class Overworld {
     this.element = config.element;
     this.canvas = this.element.querySelector(".game-canvas");
     this.ctx = this.canvas.getContext("2d");
+    this.map = null;
+  }
+
+  startGameLoop() {
+    const step = () => {
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.map.drawLowerImage(this.ctx);
+      Object.values(this.map.gameObject).forEach((object) => {
+        // object.x += 1;
+        object.update({})
+        object.sprite.draw(this.ctx);
+      });
+      this.map.drawUpperImage(this.ctx);
+      requestAnimationFrame(() => {
+        step();
+      });
+    };
+
+    step();
   }
 
   init() {
-    console.log("Hello from the Overworld", this);
-
-    const image = new Image();
-    image.src = "/images/maps/DemoLower.png";
-    image.onload = () => {
-      this.ctx.drawImage(image, 0, 0);
-    };
-
-    const hero = new GameObject({
-      x: 5,
-      y: 6,
-    });
-    const npc = new GameObject({
-      x: 7,
-      y: 9,
-      src: "/images/characters/people/npc1.png",
-    });
-
-    setTimeout(() => {
-      hero.sprite.draw(this.ctx);
-      npc.sprite.draw(this.ctx);
-    },100)
+    this.map = new OverworldMaps(window.overworldMaps.DemoRoom);
+    this.startGameLoop();
   }
 }
