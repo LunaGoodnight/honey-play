@@ -25,8 +25,9 @@ window.overworldMaps = {
       hero: new Person({
         x: utils.withGrid(5),
         y: utils.withGrid(6),
+        isPlayerControlled: true
       }),
-      npc1: new GameObject({
+      npc1: new Person({
         x: utils.withGrid(7),
         y: utils.withGrid(9),
         src: "/images/characters/people/npc1.png",
