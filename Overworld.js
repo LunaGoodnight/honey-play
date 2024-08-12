@@ -15,6 +15,7 @@ class Overworld {
       Object.values(this.map.gameObject).forEach((object) => {
         object.update({
           arrow: this.directionInput.direction,
+          map: this.map,
         });
       });
       this.map.drawLowerImage(this.ctx, cameraPerson);
