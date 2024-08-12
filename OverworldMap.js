@@ -1,4 +1,4 @@
-class OverworldMaps {
+class OverworldMap {
   constructor(config) {
     this.gameObject = config.gameObject;
     this.lowerImage = new Image();
@@ -8,12 +8,14 @@ class OverworldMaps {
     this.upperImage.src = config.upperSrc;
   }
 
-  drawLowerImage(ctx) {
-    ctx.drawImage(this.lowerImage, 0, 0);
+  drawLowerImage(ctx, cameraPerson) {
+    ctx.drawImage(this.lowerImage, utils.withGrid(10.5) - cameraPerson.x, utils.withGrid(6) - cameraPerson.y);
+    // ctx.drawImage(this.lowerImage, 0,0);
   }
 
-  drawUpperImage(ctx) {
-    ctx.drawImage(this.upperImage, 0, 0);
+  drawUpperImage(ctx, cameraPerson) {
+    ctx.drawImage(this.upperImage, utils.withGrid(10.5) - cameraPerson.x, utils.withGrid(6) - cameraPerson.y);
+    // ctx.drawImage(this.upperImage, 0,0);
   }
 }
 
