@@ -1,6 +1,6 @@
 class OverworldMap {
   constructor(config) {
-    this.gameObject = config.gameObject;
+    this.gameObjects = config.gameObjects;
     this.walls = config.walls || {};
     this.lowerImage = new Image();
     this.lowerImage.src = config.lowerSrc;
@@ -31,13 +31,33 @@ class OverworldMap {
     const { x, y } = utils.nextPosition(currentX, currentY, direction);
     return this.walls[`${x},${y}`] || false;
   }
+
+  mountObjects() {
+    Object.values(this.gameObjects).forEach((o => {
+      o.mount(this);
+    }))
+  }
+
+  addWall(x, y) {
+    this.walls[`${x},${y}`] = true;
+  }
+
+  removeWall(x, y) {
+    delete this.walls[`${x},${y}`];
+  }
+
+  moveWall(wasX, wasY, direction) {
+    this.removeWall(wasX, wasY);
+    const { x, y } = utils.nextPosition(wasX, wasY, direction);
+    this.addWall(x, y);
+  }
 }
 
 window.overworldMaps = {
   DemoRoom: {
     lowerSrc: "/images/maps/DemoLower.png",
     upperSrc: "/images/maps/DemoUpper.png",
-    gameObject: {
+    gameObjects: {
       hero: new Person({
         x: utils.withGrid(5),
         y: utils.withGrid(6),
@@ -59,7 +79,7 @@ window.overworldMaps = {
   Kitchen: {
     lowerSrc: "/images/maps/KitchenLower.png",
     upperSrc: "/images/maps/KitchenUpper.png",
-    gameObject: {
+    gameObjects: {
       hero: new GameObject({
         x: 2,
         y: 1,
