@@ -33,9 +33,11 @@ class OverworldMap {
   }
 
   mountObjects() {
-    Object.values(this.gameObjects).forEach((o => {
-      o.mount(this);
-    }))
+    Object.keys(this.gameObjects).forEach((key) => {
+      let object = this.gameObjects[key];
+      object.id = key;
+      object.mount(this);
+    });
   }
 
   addWall(x, y) {
